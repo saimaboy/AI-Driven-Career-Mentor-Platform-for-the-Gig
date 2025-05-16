@@ -1,1 +1,1 @@
-# AI-Driven-Career-Mentor-Platform-for-the-Gig
+python -m spacy download en_core_web_md
