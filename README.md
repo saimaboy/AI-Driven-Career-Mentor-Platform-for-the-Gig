@@ -1,3 +1,4 @@
+
 # AI-Driven Career Mentor Platform
 
 An interactive web application designed to provide personalized career mentoring by leveraging state-of-the-art natural language processing and machine learning techniques.
@@ -8,7 +9,7 @@ An interactive web application designed to provide personalized career mentoring
 
 - **User-friendly Web Interface** built with [Streamlit](https://streamlit.io/)
 - **Data Handling & Analysis** powered by [Pandas](https://pandas.pydata.org/)
-- **Natural Language Processing** using [spaCy](https://spacy.io/) for linguistic features extraction
+- **Natural Language Processing** using [spaCy](https://spacy.io/) for linguistic feature extraction
 - **Semantic Embeddings** generated via [sentence-transformers](https://www.sbert.net/) to understand textual context
 - **Deep Learning Models** running on [PyTorch](https://pytorch.org/) backend for flexible, efficient model development
 
@@ -16,13 +17,13 @@ An interactive web application designed to provide personalized career mentoring
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Setup](#setup)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+- [Installation](#installation)  
+- [Setup](#setup)  
+- [Usage](#usage)  
+- [Project Structure](#project-structure)  
+- [Contributing](#contributing)  
+- [License](#license)  
+- [Contact](#contact)  
 
 ---
 
@@ -30,90 +31,127 @@ An interactive web application designed to provide personalized career mentoring
 
 ### Prerequisites
 
-- Python 3.7 or higher
-- Git (optional, for cloning repository)
+- Python 3.7 or higher  
+- Git (optional, for cloning repository)  
 
 ### Clone the repository (if applicable)
 
 ```bash
 git clone https://github.com/yourusername/your-repo-name.git
 cd your-repo-name
-Create a virtual environment (recommended)
-bash
-Copy
+````
+
+### Create a virtual environment (recommended)
+
+```bash
 python -m venv venv
-Activate the virtual environment:
+```
 
-On Windows:
+### Activate the virtual environment
 
-bash
-Copy
+* On **Windows**:
+
+```bash
 venv\Scripts\activate
-On macOS/Linux:
+```
 
-bash
-Copy
+* On **macOS/Linux**:
+
+```bash
 source venv/bin/activate
-Install dependencies
-bash
-Copy
+```
+
+### Install dependencies
+
+```bash
 pip install -r requirements.txt
-If you don’t have a requirements.txt file yet, you can install directly:
+```
 
-bash
-Copy
+If you don’t have a `requirements.txt` file yet, install directly with:
+
+```bash
 pip install streamlit pandas spacy sentence-transformers torch
-Setup
-Download spaCy Language Model
-After installing spaCy, download the language model needed (English example):
+```
 
-bash
-Copy
+---
+
+## Setup
+
+### Download spaCy Language Model
+
+After installing spaCy, download the required language model (English example):
+
+```bash
 python -m spacy download en_core_web_sm
-If you need a different language, replace en_core_web_sm accordingly.
+```
 
-Usage
+Replace `en_core_web_sm` with your desired language model if different.
+
+---
+
+## Usage
+
 Run the Streamlit app with:
 
-bash
-Copy
+```bash
 streamlit run app.py
-Replace app.py with your main Python script filename.
+```
 
-Open your browser and navigate to the URL shown in the terminal (usually http://localhost:8501).
+Replace `app.py` with your main Python script filename.
 
-Project Structure
-bash
-Copy
+Open your browser and navigate to the URL shown in the terminal (usually [http://localhost:8501](http://localhost:8501)).
+
+---
+
+## Project Structure
+
+```
 ├── app.py                # Main Streamlit application script
 ├── requirements.txt      # Python dependencies
 ├── data/                 # Data files (if any)
 ├── models/               # Saved ML models or embeddings
 ├── utils/                # Utility functions and modules
 └── README.md             # This file
+```
+
 Adjust the structure to your actual project layout.
 
-Contributing
+---
+
+## Contributing
+
 Contributions are welcome! Please follow these steps:
 
-Fork the repository
+1. Fork the repository
+2. Create a feature branch
 
-Create a feature branch (git checkout -b feature/your-feature)
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+3. Commit your changes
 
-Commit your changes (git commit -m "Add your message")
+   ```bash
+   git commit -m "Add your message"
+   ```
+4. Push to the branch
 
-Push to the branch (git push origin feature/your-feature)
+   ```bash
+   git push origin feature/your-feature
+   ```
+5. Open a Pull Request
 
-Open a Pull Request
+---
 
-License
-Specify your license here (e.g., MIT License):
+## License
 
-nginx
-Copy
 MIT License
-Contact
-Your Name – dhanukanuwan2001@gmail.com
 
-Project Link: https://github.com/saimaboy/FreelanceHub.git
+---
+
+## Contact
+
+Your Name – [dhanukanuwan2001@gmail.com](mailto:dhanukanuwan2001@gmail.com)
+Project Link: [https://github.com/saimaboy/FreelanceHub.git](https://github.com/saimaboy/FreelanceHub.git)
+
+
 
