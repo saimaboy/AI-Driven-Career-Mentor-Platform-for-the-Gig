@@ -336,13 +336,19 @@ def display_my_gigs_tab(user_id):
 def display_create_gig_tab(user_id, user_skills):
     st.subheader("Create a New Gig")
 
+    # Ensure session state variables are initialized
+    if "dismissed_gigs" not in st.session_state:
+        st.session_state.dismissed_gigs = set()
+    if "prefill_gig" not in st.session_state:
+        st.session_state.prefill_gig = {}
+
     if not user_skills:
         st.warning("You need to add skills to your profile before creating a gig.")
         if st.button("Add Skills Now"):
             st.switch_page("pages/profile.py")
         return
 
-    # 2) build raw suggestions
+    # 2) Build raw suggestions
     raw = recommend_gigs(user_id, limit=10) or []
     existing = {g["id"] for g in db.get_gigs(user_id=user_id)}
     suggestions = [
@@ -351,7 +357,7 @@ def display_create_gig_tab(user_id, user_skills):
            and g["id"] not in st.session_state.dismissed_gigs
     ]
 
-    # 3) fallback (filtered)
+    # 3) Fallback (filtered)
     if not suggestions:
         fallback = []
         for skill in user_skills[:5]:
@@ -362,21 +368,21 @@ def display_create_gig_tab(user_id, user_skills):
                 "id": tpl_id,
                 "title": f"I will provide professional {skill['name']} services",
                 "description": "...",
-                "price_min": 50,
-                "price_max": 150,
+                "price_min": 50.0,  # Use float for consistency
+                "price_max": 150.0,  # Use float for consistency
                 "duration": "3-5 days",
                 "skills": [skill["id"]],
             })
         suggestions = fallback
 
-    # --- 4) render the panel if we have ANY suggestions ---
+    # --- 4) Render the panel if we have ANY suggestions ---
     if suggestions:
         st.subheader("✏️ Gig Ideas for You")
         for gig in suggestions[:5]:
             st.markdown(f"**{gig['title']}**  \n{gig['description'][:150]}…")
             c1, c2 = st.columns(2)
 
-            # callback to prefill, normalizing skills → always a list of ints
+            # Callback to prefill, normalizing skills → always a list of ints
             def _use_template(gig=gig):
                 raw_skills = gig.get("skills", [])
                 skill_ids = [
@@ -395,7 +401,7 @@ def display_create_gig_tab(user_id, user_skills):
             c1.button("Use as Template", key=f"use_{gig['id']}", on_click=_use_template)
 
             def _dismiss(gig_id=gig["id"]):
-                st.session_state.dismissed_gigs = st.session_state.dismissed_gigs | {gig_id}
+                st.session_state.dismissed_gigs.add(gig_id)
 
             c2.button("Dismiss", key=f"dismiss_{gig['id']}", on_click=_dismiss)
 
@@ -403,8 +409,8 @@ def display_create_gig_tab(user_id, user_skills):
     pre = st.session_state.prefill_gig
     default_title       = pre.get("title", "")
     default_description = pre.get("description", "")
-    default_price_min   = pre.get("price_min", 50)
-    default_price_max   = pre.get("price_max", 100)
+    default_price_min   = pre.get("price_min", 50.0)  # Ensure float
+    default_price_max   = pre.get("price_max", 100.0)  # Ensure float
     default_duration    = pre.get("duration", "1 week")
     default_skills      = set(pre.get("skills", []))
 
@@ -422,12 +428,12 @@ def display_create_gig_tab(user_id, user_skills):
 
         with col1:
             price_min = st.number_input(
-                "Minimum Price ($)", min_value=1, max_value=10000,
+                "Minimum Price ($)", min_value=1.0, max_value=10000.0,  # Use float
                 value=default_price_min
             )
         with col2:
             price_max = st.number_input(
-                "Maximum Price ($)", min_value=1, max_value=10000,
+                "Maximum Price ($)", min_value=1.0, max_value=10000.0,  # Use float
                 value=default_price_max
             )
 
@@ -456,11 +462,11 @@ def display_create_gig_tab(user_id, user_skills):
         submit = st.form_submit_button("Create Gig")
         if submit:
             if not title or not description:
-                st.error("Provide both title and description.")
+                st.error("Please provide both title and description.")
             elif price_min > price_max:
-                st.error("Min price cannot exceed max price.")
+                st.error("Minimum price cannot exceed maximum price.")
             elif not selected_skill_ids:
-                st.error("Select at least one skill.")
+                st.error("Please select at least one skill.")
             else:
                 new_id = db.create_gig(
                     user_id, title, description,
@@ -469,7 +475,7 @@ def display_create_gig_tab(user_id, user_skills):
                 )
                 if new_id:
                     st.success("Gig created successfully!")
-                    # clear prefill and jump back to My Gigs
+                    # Clear prefill and jump back to My Gigs
                     st.session_state.prefill_gig = {}
                     st.session_state.active_gig_tab = 1
                     time.sleep(1)
@@ -478,7 +484,6 @@ def display_create_gig_tab(user_id, user_skills):
                     st.rerun()
                 else:
                     st.error("An error occurred while creating the gig. Please try again.")
-
 
 def display_picked_gigs_tab(user_id):
     st.subheader("Gigs You've Picked")
